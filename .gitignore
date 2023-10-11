@@ -1,0 +1,6 @@
+# content from build
+build/
+framework/*.exe
+framework/rpc-client-impl.cpp
+framework/rpc-function.hpp
+framework/rpc-server-impl.cpp
