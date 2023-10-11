@@ -1,6 +1,6 @@
 # RPC
 RPC framework & examples
-- For more information, read `notes.txt`
+- For more information, read `framework/notes.txt`
 - Open source under [LICENSE.txt]
 
 ## Build & Use
@@ -29,7 +29,7 @@ rpcc generates code necessary for later builds from your input source code.
 - Move the binary to project directory with `move Release\rpcc.exe ..\..\framework`
 <br><br>
 5. Switch back to build directory with `popd`
-#### Generate code with `rpcc`
+#### Generate Code With `rpcc`
 Specify the file where your functions are as the argument of rpcc. <br>
 For example: `../framework/rpcc ../framework/function.cpp`<br>
 Or you can use the interactive terminal/console interface.
