@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     }
     std::string userCode;
     std::vector<FuncInf> funcList;
-    const std::regex funcDefRegEx{ "(.*?)(((?:(?:const|volatile|mutable|static|extern|inline|virtual|explicit|friend)\\s+)*(?:\\w+::)*(?:\\w+<.*?>|\\w+)\\s*(?:\\*|\\&|\\&\\&|\\[\\d*\\])*)\\s+([A-Za-z_]\\w*)\\s*\\(((?:(?:(?:(?:const|volatile|mutable|static|extern|inline|virtual|explicit|friend)\\s+)*(?:\\w+::)*(?:\\w+<.*?>|\\w+)\\s*(?:\\*|\\&|\\&\\&|\\[\\d*\\])*)\\s+(?:[A-Za-z_]\\w*)(?:,\\s*)?)*)\\))\\s*(?:const)?\\s*(.*)\\r?$" };
+    const std::regex funcDefRegEx("(.*?)(((?:(?:const|volatile|mutable|static|extern|inline|virtual|explicit|friend)\\s+)*(?:\\w+::)*(?:\\w+<.*?>|\\w+)\\s*(?:\\*|\\&|\\&\\&|\\[\\d*\\])*)\\s+([A-Za-z_]\\w*)\\s*\\(((?:(?:(?:(?:const|volatile|mutable|static|extern|inline|virtual|explicit|friend)\\s+)*(?:\\w+::)*(?:\\w+<.*?>|\\w+)\\s*(?:\\*|\\&|\\&\\&|\\[\\d*\\])*)\\s+(?:[A-Za-z_]\\w*)(?:,\\s*)?)*)\\))\\s*(?:const)?\\s*(.*)\\r?$");
     std::smatch m;
     size_t currentLine = 0;
     std::cout << "parsing functions ..." << std::endl;
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
                 userCode = m[6].str();
                 // info in m lost because userCode has changed
                 size_t argCount = 0;
-                const std::regex agrListRegEx{ "(?:((?:(?:const|volatile|mutable|static|extern|inline|virtual|explicit|friend)\\s+)*(?:\\w+::)*(?:\\w+<.*?>|\\w+)\\s*(?:\\*|\\&|\\&\\&|\\[\\d*\\])*)\\s+([A-Za-z_]\\w*)(?:,\\s*)?)?(.*)$" };
+                const std::regex agrListRegEx("(?:((?:(?:const|volatile|mutable|static|extern|inline|virtual|explicit|friend)\\s+)*(?:\\w+::)*(?:\\w+<.*?>|\\w+)\\s*(?:\\*|\\&|\\&\\&|\\[\\d*\\])*)\\s+([A-Za-z_]\\w*)(?:,\\s*)?)?(.*)$");
                 do {
                     match = std::regex_match(argList, m, agrListRegEx);
                     if (match && m.size() == 4) {
