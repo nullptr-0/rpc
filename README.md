@@ -30,9 +30,11 @@ rpcc generates code necessary for later builds from your input source code.
 <br><br>
 5. Switch back to build directory with `popd`
 #### Generate Code With `rpcc`
-Specify the file where your functions are as the argument of rpcc. <br>
-For example: `../framework/rpcc ../framework/function.cpp`<br>
+1. Switch to `framework` directory with `pushd ../framework`
+1. Specify the file where your functions are as the argument of rpcc. <br>
+For example: `./rpcc function.cpp`<br>
 Or you can use the interactive terminal/console interface.
+1. Switch back to build directory with `popd`
 <br><br>
 Now the framework is ready for build.
 #### Build `rpc-server` & `rpc-client`
@@ -45,7 +47,7 @@ Now the framework is ready for build.
 1. Configure build files using CMake with `cmake ../../framework`
 1. Build and move the binary.
 	##### Linux (Makefile)
-- Build the binary with `make rpc`
+- Build the binary with `make`
 - Move the binary to wherever you need it with `mv rpc-server rpc-client new_path_of_binaries`
 	##### Windows (MSBuild)
 - Build the binary with `msbuild /m /p:Configuration=Release rpc.vcxproj`
