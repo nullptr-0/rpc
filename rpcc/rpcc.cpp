@@ -166,7 +166,7 @@ int main(int argc, char* argv[])
         std::cerr << "rpcc: unable to open rpc-function.hpp" << std::endl;
         return 3;
     }
-    codeOutput << "// generated code for rpc\n\n#pragma once\n\n" << includeCommand << "namespace rpc {\n\tvoid SetServer(std::string rHost, int rPort);\n";
+    codeOutput << "// generated code for rpc\n\n#pragma once\n\n" << includeCommand << "#include <string>\nnamespace rpc {\n\tvoid SetServer(std::string rHost, int rPort);\n";
     for (size_t i = 0; i < funcList.size(); ++i)
     {
         codeOutput << "\t" << funcList[i].retType << " " << funcList[i].funcName << "(";
