@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <thread>
 #include "rpc-server.hpp"
 #include "unisock.hpp"
 #include "crypto/ecc.hpp"
