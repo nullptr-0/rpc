@@ -1,0 +1,17 @@
+#pragma once
+
+#include "rpc-custom-type-serializer.hpp"
+
+RPC_CUSTOM_TYPE_SERIALIZER(
+	MyType,
+	RPC_SERIALIZE_PUBLIC_MEMBER(first),
+	RPC_SERIALIZE_PUBLIC_MEMBER(second),
+	RPC_SERIALIZE_NONPUBLIC_MEMBER(someProtectedOrPrivateField, get)
+)
+
+RPC_CUSTOM_TYPE_DESERIALIZER(
+	MyType,
+	RPC_DESERIALIZE_PUBLIC_MEMBER(first),
+	RPC_DESERIALIZE_PUBLIC_MEMBER(second),
+	RPC_DESERIALIZE_NONPUBLIC_MEMBER(someProtectedOrPrivateField, set)
+)

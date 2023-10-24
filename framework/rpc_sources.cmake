@@ -13,6 +13,7 @@ set(RPC_SERVER_HEADERS
     ${CRYPTO_HEADERS}
     crypto/ecc.hpp
     json.hpp
+    rpc-custom-type-serializer.hpp
     rpc-server.hpp
     unisock.hpp
 )
@@ -29,6 +30,7 @@ set(RPC_CLIENT_HEADERS
     ${CRYPTO_HEADERS}
     crypto/ecc.hpp
     json.hpp
+    rpc-custom-type-serializer.hpp
     rpc-client.hpp
     rpc-function.hpp
     unisock.hpp

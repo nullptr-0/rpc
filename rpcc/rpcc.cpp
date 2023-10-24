@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
         std::cerr << "rpcc: unable to open rpc-client-impl.cpp" << std::endl;
         return 3;
     }
-    codeOutput << "// generated code for rpc\n\n" << includeCommand << "#include \"rpc-client.hpp\"\n\nnamespace rpc {\n";
+    codeOutput << "// generated code for rpc\n\n" << includeCommand << "#include \"rpc-client.hpp\"\n" << (includeCommand != "" ? "#include \"rpc_custom_type_serializer_impl.hpp\"\n" : "") << "\nnamespace rpc {\n";
     for (size_t i = 0; i < funcList.size(); ++i)
     {
         codeOutput << "\t" << funcList[i].retType << " " << funcList[i].funcName << "(";
@@ -190,7 +190,7 @@ int main(int argc, char* argv[])
         std::cerr << "rpcc: unable to open rpc-server-impl.cpp" << std::endl;
         return 3;
     }
-    codeOutput << "// generated code for rpc\n\n" << includeCommand << "#include \"rpc-server.hpp\"\n\n";
+    codeOutput << "// generated code for rpc\n\n" << includeCommand << "#include \"rpc-server.hpp\"\n" << (includeCommand != "" ? "#include \"rpc_custom_type_serializer_impl.hpp\"\n" : "") << "\n";
     for (size_t i = 0; i < funcList.size(); ++i)
     {
         codeOutput << funcList[i].retType << " " << funcList[i].funcName << "(";
