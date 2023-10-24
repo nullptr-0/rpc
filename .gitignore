@@ -1,5 +1,6 @@
 # content from build
 build/
+framework/rpcc
 framework/*.exe
 framework/rpc-client-impl.cpp
 framework/rpc-function.hpp
