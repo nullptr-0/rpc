@@ -26,7 +26,7 @@ rpcc generates code necessary for later builds from your input source code.
 - Move the binary to `framework` directory with `mv rpcc ../../framework`
 	##### Windows (MSBuild)
 - Build the binary with `msbuild /m /p:Configuration=Release rpcc.vcxproj`
-- Move the binary to project directory with `move Release\rpcc.exe ..\..\framework`
+- Move the binary to `framework` directory with `move Release\rpcc.exe ..\..\framework`
 <br><br>
 5. Switch back to build directory with `popd`
 #### Generate Code With `rpcc`
@@ -48,10 +48,10 @@ Now the framework is ready for build.
 1. Build and move the binary.
 	##### Linux (Makefile)
 - Build the binary with `make`
-- Move the binary to wherever you need it with `mv rpc-server rpc-client new_path_of_binaries`
+- Move the binary to wherever you like with `mv rpc-server rpc-client new_path_of_binaries`
 	##### Windows (MSBuild)
 - Build the binary with `msbuild /m /p:Configuration=Release rpc.vcxproj`
-- Move the binary to project directory with `move Release\rpc-server.exe,Release\rpc-client.exe new_path_of_binaries`
+- Move the binary to wherever you like with `move Release\rpc-server.exe,Release\rpc-client.exe new_path_of_binaries`
 
 ### Use
 
