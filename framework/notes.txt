@@ -17,6 +17,3 @@ This is the single header version of nlohmann/json library
 
 - all content except ecc.hpp in ./crypto
 These files are from libtom/libtommath, we made a few changes to fit it in though.
-
-- rpc-server-wip.cpp
-This is a WIP(work-in-progress) version of rpc-server.cpp which should have been working while actually don't. (We are still figuring out the cause.)

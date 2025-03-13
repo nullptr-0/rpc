@@ -1,5 +1,8 @@
 ﻿#include <iostream>
 #include <thread>
+#include <queue>
+#include <mutex>
+#include <semaphore>
 #include "rpc-server.hpp"
 #include "unisock.hpp"
 #include "crypto/ecc.hpp"
@@ -22,9 +25,11 @@ ReturnValue RpcFunctions::callFunction(const std::string& name, const std::vecto
 void RegFuncs();
 void ExecFunc(const std::string funcName, const std::vector<Argument>& args, json& retVal);
 
+#define MAX_WORKER 50
+
 class RpcServer {
 public:
-    RpcServer(int port) : port(port), pSocket(nullptr) {
+    RpcServer(int port) : port(port), sem(MAX_WORKER) {
         RegFuncs();
     }
 
@@ -37,31 +42,46 @@ public:
             cryptoInfo.privateKey
         );
         try {
-            pSocket = new RawSocket;
-            if (!pSocket) {
-                throw std::runtime_error("Cannot create socket instance");
-            }
-            pSocket->listen(port);
-            std::thread newThread(&RpcServer::process, this);
-            newThread.detach();
+            RawSocket socket;
+            socket.listen(port);
             std::cout << "Server started on port " << port << std::endl;
-            std::cin.get();
+            std::thread newThread(&RpcServer::dispatch, this);
+            newThread.detach();
+            while (true) {
+                RawSocket clientSocket = socket.accept();
+                std::unique_lock<std::mutex> lock(mtx);
+                reqQueue.push(clientSocket);
+                condition.notify_one();
+            }
         }
         catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << std::endl;
         }
     }
 
-    void process() {
-        try {
-            if (!pSocket) {
-                throw std::runtime_error("Socket instance no longer available");
+    void dispatch() {
+        while (true)
+        {
+            try {
+                RawSocket s;
+                {
+                    std::unique_lock<std::mutex> lock(mtx);
+                    condition.wait(lock, [this] { return !reqQueue.empty(); });
+                    s = reqQueue.front();
+                    reqQueue.pop();
+                }
+                sem.acquire();
+                std::thread newThread(&RpcServer::worker, this, s);
+                newThread.detach();
             }
-            RawSocket clientSocket = pSocket->accept();
+            catch (const std::exception& e) {
+                std::cerr << "Error: " << e.what() << std::endl;
+            }
+        }
+    }
 
-            std::thread newThread(&RpcServer::process, this);
-            newThread.detach();
-
+    void worker(RawSocket clientSocket) {
+        try {
             json responseData;
             std::string response;
             responseData["FiniteField"] = cryptoInfo.finiteField;
@@ -123,11 +143,15 @@ public:
         catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << std::endl;
         }
+        sem.release();
     }
 
 private:
     int port;
-    RawSocket* pSocket;
+    std::queue<RawSocket> reqQueue;
+    std::mutex mtx;
+    std::condition_variable condition;
+    std::counting_semaphore<> sem;
     EccCryptoInfo cryptoInfo;
 };
 
