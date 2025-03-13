@@ -15,6 +15,7 @@ set(RPC_SERVER_HEADERS
     json.hpp
     rpc-custom-type-serializer.hpp
     rpc-server.hpp
+    descman.hpp
     unisock.hpp
 )
 
@@ -33,5 +34,6 @@ set(RPC_CLIENT_HEADERS
     rpc-custom-type-serializer.hpp
     rpc-client.hpp
     rpc-function.hpp
+    descman.hpp
     unisock.hpp
 )
