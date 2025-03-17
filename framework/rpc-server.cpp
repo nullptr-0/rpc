@@ -49,8 +49,10 @@ public:
             newThread.detach();
             while (true) {
                 RawSocket clientSocket = socket.accept();
-                std::unique_lock<std::mutex> lock(mtx);
-                reqQueue.push(clientSocket);
+                {
+                    std::unique_lock<std::mutex> lock(mtx);
+                    reqQueue.push(clientSocket);
+                }
                 condition.notify_one();
             }
         }
@@ -66,7 +68,14 @@ public:
                 RawSocket s;
                 {
                     std::unique_lock<std::mutex> lock(mtx);
-                    condition.wait(lock, [this] { return !reqQueue.empty(); });
+                    condition.wait(lock, [this] {
+                        bool hasReq;
+                        {
+                            std::unique_lock<std::mutex> lock(mtx);
+                            hasReq = !reqQueue.empty();
+                        }
+                        return hasReq;
+                        });
                     s = reqQueue.front();
                     reqQueue.pop();
                 }
