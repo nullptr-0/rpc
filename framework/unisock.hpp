@@ -160,7 +160,9 @@ public:
     }
 };
 
+#ifdef _WIN32
 bool RawSocket::wsaInitialized = false;
+#endif
 
 class SocketBuffer : public std::streambuf {
 private:
