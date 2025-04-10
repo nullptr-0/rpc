@@ -254,7 +254,7 @@ public:
 
     explicit socketstream() : std::iostream(&sockBuf), sockBuf(socket) {}
 
-    explicit socketstream(const std::string host, const int port, socketstream::mode streamMode) : std::iostream(&sockBuf), sockBuf(socket) {
+    explicit socketstream(const std::string host, const int port, socketstream::mode streamMode) : std::iostream(&sockBuf) {
         open(host, port, streamMode);
     }
 
